@@ -1,0 +1,28 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /yjjk
+#  ssl:
+#    key-store: classpath:tonticn.cn.jks
+#    key-store-password: 66i49euxdw7919
+#    keyStoreType: JKS
+
+spring:
+  datasource:
+    username: root
+    password: YJjk_2018
+    url: jdbc:mysql://118.31.14.197:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapping/*Mapper.xml
+  type-aliases-package: com.yjjk.reservation.entity
+
+#showSql
+logging:
+  level:
+    com:
+      yjjk:
+        reservation:
+          mapper:
+            DEBUG

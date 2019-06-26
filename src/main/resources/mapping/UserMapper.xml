@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjjk.reservation.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.yjjk.reservation.entity.User">
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="BIGINT"/>
+        <result column="user_type" property="userType" jdbcType="INTEGER"/>
+        <result column="employee_code" property="employeeCode" jdbcType="VARCHAR"/>
+        <result column="open_id" property="openId" jdbcType="VARCHAR"/>
+        <result column="union_id" property="unionId" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getUserInfoBySelect" resultMap="BaseResultMap" parameterType="com.yjjk.reservation.entity.User">
+        select user_id, name, phone, user_type, employee_code, open_id, union_id, create_time, status
+        from yj_user_info
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="name != null and name != '' ">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="phone != null and phone != '' ">
+                and phone = #{phone,jdbcType=INTEGER}
+            </if>
+            <if test="userType != null and userType != '' ">
+                and user_type = #{userType,jdbcType=INTEGER}
+            </if>
+            <if test="employeeCode != null and employeeCode != '' ">
+                and employee_code = #{employeeCode,jdbcType=VARCHAR}
+            </if>
+            <if test="openId != null and openId != '' ">
+                and open_id = #{openId,jdbcType=VARCHAR}
+            </if>
+            <if test="unionId!=null and unionId!=''">
+                and union_id = #{unionId,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                and create_time = #{createTime,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </select>
+    <update id="updateUserInfoBySelect" parameterType="com.yjjk.reservation.entity.User">
+        update yj_user_info
+        <set>
+            <if test="userId != null and userId != '' ">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null and name != '' ">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null and phone != '' ">
+                phone = #{phone,jdbcType=INTEGER},
+            </if>
+            <if test="userType != null and userType != '' ">
+                user_type = #{userType,jdbcType=INTEGER},
+            </if>
+            <if test="employeeCode != null and employeeCode != '' ">
+                employee_code = #{employeeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null and openId != '' ">
+                open_id = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="unionId!=null and unionId!=''">
+                union_id = #{unionId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="name != null and name != '' ">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="phone != null and phone != '' ">
+                and phone = #{phone,jdbcType=INTEGER}
+            </if>
+            <if test="userType != null and userType != '' ">
+                and user_type = #{userType,jdbcType=INTEGER}
+            </if>
+            <if test="employeeCode != null and employeeCode != '' ">
+                and employee_code = #{employeeCode,jdbcType=VARCHAR}
+            </if>
+            <if test="openId != null and openId != '' ">
+                and open_id = #{openId,jdbcType=VARCHAR}
+            </if>
+            <if test="unionId!=null and unionId!=''">
+                and union_id = #{unionId,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                and create_time = #{createTime,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </update>
+    <update id="updateUserInfoByWx" parameterType="com.yjjk.reservation.entity.User">
+        update yj_user_info
+        <set>
+            <if test="openId != null and openId != '' ">
+                open_id = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="unionId!=null and unionId!=''">
+                union_id = #{unionId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="name != null and name != '' ">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="phone != null and phone != '' ">
+                and phone = #{phone,jdbcType=INTEGER}
+            </if>
+            <if test="userType != null and userType != '' ">
+                and user_type = #{userType,jdbcType=INTEGER}
+            </if>
+            <if test="employeeCode != null and employeeCode != '' ">
+                and employee_code = #{employeeCode,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                and create_time = #{createTime,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </update>
+</mapper>
+

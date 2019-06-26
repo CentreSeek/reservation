@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjjk.reservation.mapper.OrderRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.yjjk.reservation.entity.OrderRecord">
+        <id column="order_id" property="orderId" jdbcType="INTEGER"/>
+        <result column="order_date" property="orderDate" jdbcType="VARCHAR"/>
+        <result column="times_id" property="timesId" jdbcType="INTEGER"/>
+        <result column="room_id" property="roomId" jdbcType="INTEGER"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="path" property="path" jdbcType="VARCHAR"/>
+        <result column="start_time" property="startTime" jdbcType="VARCHAR"/>
+        <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getOrderRecords" resultMap="BaseResultMap" parameterType="com.yjjk.reservation.entity.OrderRecord">
+        select order_id, order_date, times_id, room_id, user_id, user_name, create_time, status
+        from yj_conference_room_order
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="orderId != null and orderId != '' ">
+                and order_id = #{orderId,jdbcType=INTEGER}
+            </if>
+            <if test="orderDate != null and orderDate != '' ">
+                and order_date = #{orderDate,jdbcType=VARCHAR}
+            </if>
+            <if test="timesId != null and timesId != '' ">
+                and times_id = #{timesId,jdbcType=INTEGER}
+            </if>
+            <if test="roomId != null and roomId != '' ">
+                and room_id = #{roomId,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="userName != null and userName != '' ">
+                and user_name = #{userName,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                and create_time = #{createTime,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </select>
+    <select id="selectHistory" resultMap="BaseResultMap" parameterType="Map">
+        select ycro.order_id, ycro.order_date, ycro.times_id, ycro.room_id, ycro.user_id, ycro.user_name,
+        jcri.name, jcri.path, ycrt.start_time, ycrt.end_time, ycro.create_time, ycro.status
+        from yj_conference_room_order ycro
+        left join yj_user_info yui on yui.user_id = ycro.user_id
+        left join yj_conference_room_info jcri on ycro.room_id = jcri.room_id
+        left join yj_conference_room_times ycrt on ycrt.times_id = ycro.times_id
+        where
+        <trim prefixOverrides="AND">
+            <if test="openId != null and openId != '' ">
+                and yui.open_id = #{openId,jdbcType=VARCHAR}
+            </if>
+            <if test="unionId!=null and unionId!=''">
+                and yui.union_id = #{unionId,jdbcType=VARCHAR}
+            </if>
+            <if test="name != null and name != '' ">
+                and yui.name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="phone != null and phone != '' ">
+                and yui.phone = #{phone,jdbcType=INTEGER}
+            </if>
+            <if test="status != null">
+                and ycro.status = #{status,jdbcType=INTEGER}
+            </if>
+        </trim>
+        order by ycro.order_id desc;
+    </select>
+
+    <insert id="insertSelective" parameterType="com.yjjk.reservation.entity.OrderRecord">
+        insert into yj_conference_room_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null and orderId != '' ">
+                order_id,
+            </if>
+            <if test="orderDate != null and orderDate != '' ">
+                order_date,
+            </if>
+            <if test="timesId != null and timesId != '' ">
+                times_id,
+            </if>
+            <if test="roomId != null and roomId != '' ">
+                room_id,
+            </if>
+            <if test="userId != null and userId != '' ">
+                user_id,
+            </if>
+            <if test="userName != null and userName != '' ">
+                user_name,
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                create_time,
+            </if>
+            <if test="status != null and status != ''">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null and orderId != '' ">
+                #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="orderDate != null and orderDate != '' ">
+                #{orderDate,jdbcType=VARCHAR},
+            </if>
+            <if test="timesId != null and timesId != '' ">
+                #{timesId,jdbcType=INTEGER},
+            </if>
+            <if test="roomId != null and roomId != '' ">
+                #{roomId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null and userId != '' ">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null and userName != '' ">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null and status != ''">
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="cancelOrder" parameterType="com.yjjk.reservation.entity.OrderRecord">
+        update yj_conference_room_order
+        set status = 2
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="orderId != null and orderId != '' ">
+                and order_id=#{orderId,jdbcType=INTEGER}
+            </if>
+            <if test="orderDate != null and orderDate != '' ">
+                and order_date=#{orderDate,jdbcType=VARCHAR}
+            </if>
+            <if test="timesId != null and timesId != '' ">
+                and times_id=#{timesId,jdbcType=INTEGER}
+            </if>
+            <if test="roomId != null and roomId != '' ">
+                and room_id=#{roomId,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id=#{userId,jdbcType=INTEGER}
+            </if>
+            <if test="userName != null and userName != '' ">
+                and user_name=#{userName,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                and create_time=#{createTime,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != ''">
+                and status=#{status,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </update>
+    <update id="cancelOrderTask" parameterType="com.yjjk.reservation.entity.OrderRecord">
+        update yj_conference_room_order
+        set status = 1
+        where create_time &lt;= #{localTime,jdbcType=VARCHAR} and status = 0;
+    </update>
+</mapper>
+

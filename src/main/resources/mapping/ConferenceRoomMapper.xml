@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjjk.reservation.mapper.ConferenceRoomMapper">
+
+    <resultMap id="BaseResultMap" type="com.yjjk.reservation.entity.ConferenceRoom">
+        <id column="room_id" property="roomId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="path" property="path" jdbcType="VARCHAR"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="companyId" property="companyId" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getRooms" resultMap="BaseResultMap">
+        select room_id, name, description, path, province, city, company_id, create_time, status
+        from yj_conference_room_info
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="roomId != null and userId != '' ">
+                and room_id = #{roomId,jdbcType=INTEGER}
+            </if>
+            <if test="name != null and name != '' ">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="description != null and description != '' ">
+                and description = #{description,jdbcType=VARCHAR}
+            </if>
+            <if test="path != null and path != '' ">
+                and path = #{userType,path=VARCHAR}
+            </if>
+            <if test="province != null and province != '' ">
+                and province = #{province,jdbcType=VARCHAR}
+            </if>
+            <if test="city != null and city != '' ">
+                and city = #{city,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId!=null and companyId!=''">
+                and company_id = #{companyId,jdbcType=INTEGER}
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                and create_time = #{createTime,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </select>
+</mapper>
+
