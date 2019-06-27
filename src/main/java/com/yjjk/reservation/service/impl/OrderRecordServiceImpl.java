@@ -80,7 +80,7 @@ public class OrderRecordServiceImpl extends BaseService implements OrderRecordSe
             if (i + 1 == list.size() || !(list.get(i + 1).getOrderDate().equals(orderRecord.getOrderDate())
                     && orderRecord.getRoomId().equals(list.get(i + 1).getRoomId())
                     && orderRecord.getCreateTime().equals(list.get(i + 1).getCreateTime())
-                    && orderRecord.getTimesId().equals(list.get(i + 1).getTimesId() + 1))) {
+                    && orderRecord.getTimesId().equals(list.get(i + 1).getTimesId() - 1))) {
                 orderHistory.setEndTime(orderRecord.getEndTime());
                 orderHistory.setOrderIds(orderIds);
                 historyList.add(orderHistory);

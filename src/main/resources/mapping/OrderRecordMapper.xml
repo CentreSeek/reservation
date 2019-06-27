@@ -43,7 +43,7 @@
             <if test="createTime != null and createTime != '' ">
                 and create_time = #{createTime,jdbcType=VARCHAR}
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 and status = #{status,jdbcType=INTEGER}
             </if>
         </trim>
@@ -73,7 +73,7 @@
                 and ycro.status = #{status,jdbcType=INTEGER}
             </if>
         </trim>
-        order by ycro.order_id desc;
+        order by ycro.order_id;
     </select>
 
     <insert id="insertSelective" parameterType="com.yjjk.reservation.entity.OrderRecord">
@@ -100,7 +100,7 @@
             <if test="createTime != null and createTime != '' ">
                 create_time,
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 status,
             </if>
         </trim>
@@ -126,7 +126,7 @@
             <if test="createTime != null and createTime != '' ">
                 #{createTime,jdbcType=VARCHAR},
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 #{status,jdbcType=INTEGER},
             </if>
         </trim>
@@ -157,7 +157,7 @@
             <if test="createTime != null and createTime != '' ">
                 and create_time=#{createTime,jdbcType=VARCHAR}
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 and status=#{status,jdbcType=INTEGER}
             </if>
         </trim>
