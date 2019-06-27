@@ -165,7 +165,7 @@
     <update id="cancelOrderTask" parameterType="com.yjjk.reservation.entity.OrderRecord">
         update yj_conference_room_order
         set status = 1
-        where create_time &lt;= #{localTime,jdbcType=VARCHAR} and status = 0;
+        where order_date &lt;= #{localTime,jdbcType=VARCHAR} and status = 0;
     </update>
 </mapper>
 
