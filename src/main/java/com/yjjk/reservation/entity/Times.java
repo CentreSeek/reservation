@@ -23,5 +23,5 @@ public class Times {
     private Integer timesId;
     private String startTime;
     private String endTime;
-
+    private String timestamp;
 }

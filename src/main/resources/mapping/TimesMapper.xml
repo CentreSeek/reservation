@@ -7,11 +7,12 @@
         <id column="times_id" property="timesId" jdbcType="INTEGER"/>
         <result column="start_time" property="startTime" jdbcType="VARCHAR"/>
         <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+        <result column="timestamp" property="timestamp" jdbcType="VARCHAR"/>
     </resultMap>
 
 
     <select id="getTimesList" resultMap="BaseResultMap">
-        select times_id, start_time, end_time from yj_conference_room_times ;
+        select times_id, start_time, end_time, timestamp from yj_conference_room_times ;
     </select>
 </mapper>
 

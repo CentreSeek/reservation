@@ -163,9 +163,9 @@
         </trim>
     </update>
     <update id="cancelOrderTask" parameterType="com.yjjk.reservation.entity.OrderRecord">
-        update yj_conference_room_order
+        update yj_conference_room_order ycro
         set status = 1
-        where order_date &lt;= #{localTime,jdbcType=VARCHAR} and status = 0;
+        where CONCAT(order_date,(SELECT ycrt.start_time FROM `yj_conference_room_times` ycrt WHERE ycro.`times_id` = ycrt.times_id)) &lt;= #{localTime,jdbcType=VARCHAR} and status = 0;
     </update>
 </mapper>
 
