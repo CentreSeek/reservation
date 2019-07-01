@@ -40,7 +40,7 @@ public class SaticScheduleTask extends BaseController {
      */
     @Scheduled(fixedRate=1000*60*15)
     private void configureTasks() {
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String format = dateFormat.format(date);
         int i = super.orderRecordService.cancelOrderTask(format);

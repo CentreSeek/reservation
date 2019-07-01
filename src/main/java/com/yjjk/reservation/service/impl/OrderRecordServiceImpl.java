@@ -95,4 +95,9 @@ public class OrderRecordServiceImpl extends BaseService implements OrderRecordSe
     public int cancelOrderTask(String localTime) {
         return super.orderRecordMapper.cancelOrderTask(localTime);
     }
+
+    @Override
+    public int selectByTimesIds(OrderRecord orderRecord) {
+        return super.orderRecordMapper.selectByTimesIds(orderRecord);
+    }
 }
