@@ -11,6 +11,7 @@
 package com.yjjk.reservation.configer;
 
 import com.yjjk.reservation.controller.BaseController;
+import com.yjjk.reservation.service.OrderRecordService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -32,9 +33,11 @@ import java.util.logging.Logger;
 @Component
 @Configuration      // 1.主要用于标记配置类，兼备Component的效果。
 @EnableScheduling   // 2.开启定时任务
-public class SaticScheduleTask extends BaseController {
+public class SaticScheduleTask  {
 
 
+    @Resource
+    OrderRecordService orderRecordService;
     /**
      * 定时清理过期预约
      */
@@ -43,7 +46,16 @@ public class SaticScheduleTask extends BaseController {
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String format = dateFormat.format(date);
-        int i = super.orderRecordService.cancelOrderTask(format);
+        int i = orderRecordService.cancelOrderTask(format);
         System.err.println("执行预约过期定时计划    时间: " + format + "   执行条数:" + i);
     }
+    @Scheduled(fixedRate=1000*60)
+    private void test() {
+        int i = 0;
+        while (i == Integer.MAX_VALUE){
+
+        }
+    }
+
+
 }

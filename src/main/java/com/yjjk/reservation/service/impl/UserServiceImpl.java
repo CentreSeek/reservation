@@ -10,15 +10,13 @@
  */
 package com.yjjk.reservation.service.impl;
 
-import com.yjjk.reservation.entity.Times;
 import com.yjjk.reservation.entity.User;
 import com.yjjk.reservation.service.BaseService;
 import com.yjjk.reservation.service.UserService;
-import com.yjjk.reservation.utility.StringUtil;
+import com.yjjk.reservation.utility.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author CentreS
@@ -36,10 +34,10 @@ public class UserServiceImpl extends BaseService implements UserService {
     @Override
     public List<User> getUserInfoByWX(String openId, String unionId) {
         User user = new User();
-        if (!StringUtil.isNullorEmpty(openId)) {
+        if (!StringUtils.isNullorEmpty(openId)) {
             user.setOpenId(openId);
         }
-        if (!StringUtil.isNullorEmpty(unionId)) {
+        if (!StringUtils.isNullorEmpty(unionId)) {
             user.setUnionId(unionId);
         }
         user.setStatus(0);
@@ -65,13 +63,13 @@ public class UserServiceImpl extends BaseService implements UserService {
     @Override
     public int bandingWx(String openId, String unionId, String name, Long phone) {
         User user = new User();
-        if (!StringUtil.isNullorEmpty(openId)) {
+        if (!StringUtils.isNullorEmpty(openId)) {
             user.setOpenId(openId);
         }
-        if (!StringUtil.isNullorEmpty(unionId)) {
+        if (!StringUtils.isNullorEmpty(unionId)) {
             user.setUnionId(unionId);
         }
-        if (!StringUtil.isNullorEmpty(name)) {
+        if (!StringUtils.isNullorEmpty(name)) {
             user.setName(name);
         }
         if (phone != null) {

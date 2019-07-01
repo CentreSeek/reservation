@@ -21,7 +21,17 @@ import lombok.Data;
 public class Manager {
     private Integer managerId;
     private Integer userId;
-    private Integer type;
+    private String account;
+    private String password;
+    /**
+     * 加盐字串
+     */
+    private String salt;
+    private String picture;
+    private String name;
+    private String phone;
+    private String department;
+
     private String createTime;
     private Integer status;
 }

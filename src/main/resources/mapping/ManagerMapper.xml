@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjjk.reservation.mapper.ManagerMapper">
+
+    <resultMap id="BaseResultMap" type="com.yjjk.reservation.entity.Manager">
+        <id column="manager_id" property="managerId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="account" property="account" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="salt" property="salt" jdbcType="VARCHAR"/>
+        <result column="picture" property="picture" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="department" property="department" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getManagerInfoSelective" resultMap="BaseResultMap" parameterType="com.yjjk.reservation.entity.Manager">
+        select manager_id, user_id, account, password, salt, picture, name,phone,department, create_time, status
+        from yj_manager_info
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="managerId != null ">
+                and manager_id = #{managerId,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null ">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="account != null and account != '' ">
+                and account = #{account,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </select>
+    <insert id="insertSelective" parameterType="com.yjjk.reservation.entity.Manager">
+        insert into yj_manager_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="managerId != null">
+                manager_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="account != null and account != '' ">
+                account,
+            </if>
+            <if test="password != null and password != '' ">
+                password,
+            </if>
+            <if test="salt != null and salt != '' ">
+                salt,
+            </if>
+            <if test="picture != null and picture != '' ">
+                picture,
+            </if>
+            <if test="name != null and name != '' ">
+                name,
+            </if>
+            <if test="phone != null and phone != '' ">
+                phone,
+            </if>
+            <if test="department != null and department != '' ">
+                department,
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                create_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="managerId != null">
+                #{managerId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="account != null and account != '' ">
+                #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null and password != '' ">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null and salt != '' ">
+                #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="picture != null and picture != '' ">
+                #{picture,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null and name != '' ">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null and phone != '' ">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null and department != '' ">
+                #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+</mapper>
+

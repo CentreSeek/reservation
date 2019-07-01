@@ -10,11 +10,8 @@
  */
 package com.yjjk.reservation.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.yjjk.reservation.entity.*;
-import com.yjjk.reservation.utility.NetUtil;
-import com.yjjk.reservation.utility.StringUtil;
+import com.yjjk.reservation.utility.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -130,7 +127,7 @@ public class BookingRoomController extends BaseController {
         boolean resultCode = false;
         String message = "";
 
-        if (StringUtil.isNullorEmpty(openId) && StringUtil.isNullorEmpty(unionId) && !StringUtil.isPhoneNumber(phone.toString())) {
+        if (StringUtils.isNullorEmpty(openId) && StringUtils.isNullorEmpty(unionId) && !StringUtils.isPhoneNumber(phone.toString())) {
             message = "参数错误";
             returnResult(startTime, request, response, resultCode, message, "");
             return;
@@ -212,10 +209,10 @@ public class BookingRoomController extends BaseController {
         orderRecord.setOrderDate(orderDate);
         orderRecord.setRoomId(roomId);
         orderRecord.setUserId(userId);
-        if (!StringUtil.isNullorEmpty(userName)) {
+        if (!StringUtils.isNullorEmpty(userName)) {
             orderRecord.setUserName(userName);
         }
-        if (!StringUtil.isNullorEmpty(theme)) {
+        if (!StringUtils.isNullorEmpty(theme)) {
             orderRecord.setTheme(theme);
         }
         orderRecord.setTimesIds(timesIds.split(","));
@@ -259,7 +256,7 @@ public class BookingRoomController extends BaseController {
         long startTime = System.currentTimeMillis();
         boolean resultCode = false;
         String message = "";
-        if (StringUtil.isNullorEmpty(openId) && StringUtil.isNullorEmpty(unionId)) {
+        if (StringUtils.isNullorEmpty(openId) && StringUtils.isNullorEmpty(unionId)) {
             message = "参数错误";
             returnResult(startTime, request, response, resultCode, message, "");
             return;

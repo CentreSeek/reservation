@@ -1,6 +1,6 @@
 /**
  * Copyright (C), 2019, 义金(杭州)健康科技有限公司
- * FileName: SmsUtil
+ * FileName: SmsUtils
  * Author:   CentreS
  * Date:     2019-06-18 17:19
  * Description: Short Message Service
@@ -27,7 +27,7 @@ import com.yjjk.reservation.constant.SmsConstant;
  * @create 2019-06-18
  */
 
-public class SmsUtil {
+public class SmsUtils {
     /**
      * 发送短信:阿里sms接口调用
      * @param phone

@@ -13,10 +13,7 @@ package com.yjjk.reservation.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.yjjk.reservation.filter.AliValueFilter;
-import com.yjjk.reservation.service.ConferenceRoomService;
-import com.yjjk.reservation.service.OrderRecordService;
-import com.yjjk.reservation.service.TimesService;
-import com.yjjk.reservation.service.UserService;
+import com.yjjk.reservation.service.*;
 import org.apache.log4j.Logger;
 
 import javax.annotation.Resource;
@@ -48,6 +45,8 @@ public class BaseController {
     protected ConferenceRoomService conferenceRoomService;
     @Resource
     protected OrderRecordService orderRecordService;
+    @Resource
+    protected ManagerService managerService;
 
     /**
      * WEB端返回值，判断是否过期

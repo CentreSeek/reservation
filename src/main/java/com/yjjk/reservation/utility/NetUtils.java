@@ -1,6 +1,6 @@
 /**
  * Copyright (C), 2019, 义金(杭州)健康科技有限公司
- * FileName: NetUtil
+ * FileName: NetUtils
  * Author:   CentreS
  * Date:     2019-06-24 14:10
  * Description: 网络工具
@@ -37,7 +37,7 @@ import org.apache.http.message.BasicNameValuePair;
  * Created by Song on 2016/11/28.
  * 基于HttpClient提供网络访问工具
  */
-public final class NetUtil {
+public final class NetUtils {
     public static CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
     /**

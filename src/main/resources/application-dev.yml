@@ -13,6 +13,10 @@ spring:
     password: YJjk_2018
     url: jdbc:mysql://118.31.14.197:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 2MB
+
 
 mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml
@@ -26,3 +30,5 @@ logging:
         reservation:
           mapper:
             DEBUG
+web:
+  upload-path: E:\YJJKProject\UploadImg

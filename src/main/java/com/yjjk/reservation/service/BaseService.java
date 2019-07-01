@@ -10,10 +10,7 @@
  */
 package com.yjjk.reservation.service;
 
-import com.yjjk.reservation.mapper.ConferenceRoomMapper;
-import com.yjjk.reservation.mapper.OrderRecordMapper;
-import com.yjjk.reservation.mapper.TimesMapper;
-import com.yjjk.reservation.mapper.UserMapper;
+import com.yjjk.reservation.mapper.*;
 
 import javax.annotation.Resource;
 
@@ -31,5 +28,6 @@ public class BaseService {
     protected ConferenceRoomMapper conferenceRoomMapper;
     @Resource
     protected OrderRecordMapper orderRecordMapper;
-
+    @Resource
+    protected ManagerMapper managerMapper;
 }

@@ -17,9 +17,7 @@ package com.yjjk.reservation.controller;
  */
 
 import com.google.gson.Gson;
-import com.yjjk.reservation.entity.Times;
 import com.yjjk.reservation.entity.WechatModel;
-import com.yjjk.reservation.utility.NetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
@@ -30,7 +28,6 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 @RestController
 @RequestMapping("/wx")
@@ -84,7 +81,7 @@ public class WxController extends BaseController {
 //                "appid=" + appId + "&secret=" + secret + "&code=" + code + "&grant_type=authorization_code";
 //        String url2 = "https://api.weixin.qq.com/sns/jscode2session?" +
 //                "appid=" + appId + "&secret=" + secret + "&js_code=" + code + "&grant_type=authorization_code";
-//        String result = NetUtil.get(url2);
+//        String result = NetUtils.get(url2);
 //        System.out.println(result);
 //    }
 }

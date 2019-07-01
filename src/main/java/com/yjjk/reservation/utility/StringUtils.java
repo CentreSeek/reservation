@@ -1,6 +1,6 @@
 /**
  * Copyright (C), 2019, 义金(杭州)健康科技有限公司
- * FileName: StringUtil
+ * FileName: StringUtils
  * Author:   CentreS
  * Date:     2019-06-19 17:29
  * Description: 字符串工具
@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * @author CentreS
  * @create 2019-06-19
  */
-public class StringUtil {
+public class StringUtils {
 
     private static final int PHONE_LENGTH = 11;
 

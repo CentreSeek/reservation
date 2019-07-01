@@ -1,6 +1,6 @@
 /**
  * Copyright (C), 2019, 义金(杭州)健康科技有限公司
- * FileName: JsonUtil
+ * FileName: JsonUtils
  * Author:   CentreS
  * Date:     2019-06-18 17:58
  * Description: Json Utility
@@ -22,7 +22,7 @@ import java.util.Map;
  * @author CentreS
  * @create 2019-06-18
  */
-public class JsonUtil {
+public class JsonUtils {
 
     public static String entry2Json(Map<String, Object> paramMap){
         return "";

@@ -10,17 +10,16 @@
  */
 package com.yjjk.reservation.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import com.yjjk.reservation.entity.Manager;
+import com.yjjk.reservation.utility.PasswordUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 /**
  * @author CentreS
@@ -28,39 +27,82 @@ import java.util.concurrent.TimeUnit;
  * @create 2019-06-19
  */
 @RestController
-@RequestMapping(value = "/manage")
+@RequestMapping(value = "/manager")
 public class ManagerController extends BaseController {
 
-    @Resource
-    RedisTemplate redisTemplate;
+    private static final String secretKey = "97495A6982D40CD7F0640072AEE8D058";
 
-    @RequestMapping("/login")
-    public void managerLogin(@RequestParam(value = "phone", required = true) String phone,
-                             @RequestParam(value = "phoneCode", required = true) String phonecode,
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    public void managerLogin(@RequestParam(value = "account", required = true) String account,
+                             @RequestParam(value = "password", required = true) String password,
                              HttpServletRequest request, HttpServletResponse response) {
-        ValueOperations<String, Object> operations = redisTemplate.opsForValue();
-        operations.set("code:"+"13074500888", "", 5, TimeUnit.HOURS);
-        boolean hasCode = redisTemplate.hasKey("code:");
-        if(hasCode){
-            System.out.println(redisTemplate.getKeySerializer());
+        /********************** 参数初始化 **********************/
+        long startTime = System.currentTimeMillis();
+        boolean resultCode = false;
+        String message = "";
+    }
+
+    @RequestMapping(value = "manager",method = RequestMethod.PUT)
+    public void updateManagerInfo(HttpServletRequest request, HttpServletResponse response) {
+        /********************** 参数初始化 **********************/
+        long startTime = System.currentTimeMillis();
+        boolean resultCode = false;
+        String message = "";
+
+    }
+
+    @RequestMapping(value = "manager",method = RequestMethod.GET)
+    public void getManagerInfo(HttpServletRequest request, HttpServletResponse response) {
+        /********************** 参数初始化 **********************/
+        long startTime = System.currentTimeMillis();
+        boolean resultCode = false;
+        String message = "";
+
+    }
+
+    /**
+     * 新增管理员账号：需要验证secret
+     * @param manager
+     * @param secret
+     * @param request
+     * @param response
+     */
+    @RequestMapping(value = "manager",method = RequestMethod.POST)
+    public void addManager(Manager manager,
+                           @RequestParam(value = "secret", required = true) String secret,
+            HttpServletRequest request, HttpServletResponse response) {
+        /********************** 参数初始化 **********************/
+        long startTime = System.currentTimeMillis();
+        boolean resultCode = false;
+        String message = "";
+
+        if (!secretKey.equals(secret)){
+            message = "secret验证失败";
+            returnResult(startTime, request, response, resultCode, message, "");
+            return;
         }
-
-
-
+        // 验证account是否已注册
+        Manager tempManager = new Manager();
+        tempManager.setAccount(manager.getAccount());
+        List<Manager> list = super.managerService.getManagerInfoSelective(tempManager);
+        if (list != null && list.size() != 0){
+            message = "该账户已存在";
+            returnResult(startTime, request, response, resultCode, message, "");
+            return;
+        }
+        // 加盐
+        String salt = PasswordUtils.salt();
+        String generate = PasswordUtils.generate(manager.getPassword(), salt);
+        manager.setSalt(salt);
+        manager.setPassword(generate);
+        int i = super.managerService.insertSelective(manager);
+        if (i == 0){
+            message = "插入失败";
+            returnResult(startTime, request, response, resultCode, message, "");
+            return;
+        }
+        message = "插入成功";
+        resultCode = true;
+        returnResult(startTime, request, response, resultCode, message, "");
     }
-//
-
-    @RequestMapping("/list")
-    public void getEmployeeList(HttpServletRequest request, HttpServletResponse response) {
-
-    }
-    @RequestMapping("add")
-    public void addEmployee(HttpServletRequest request, HttpServletResponse response){
-
-    }
-    @RequestMapping("delete")
-    public void deleteEmployee(HttpServletRequest request, HttpServletResponse response){
-
-    }
-
 }

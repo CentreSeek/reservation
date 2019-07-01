@@ -17,38 +17,40 @@
         <result column="path" property="path" jdbcType="VARCHAR"/>
         <result column="start_time" property="startTime" jdbcType="VARCHAR"/>
         <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="BIGINT"/>
     </resultMap>
 
     <select id="getOrderRecords" resultMap="BaseResultMap" parameterType="com.yjjk.reservation.entity.OrderRecord">
-        select order_id, order_date, times_id, room_id, user_id, user_name, theme, create_time, status
-        from yj_conference_room_order
+        select ycro.order_id, ycro.order_date, ycro.times_id, ycro.room_id, ycro.user_id, ycro.user_name, ycro.theme, ycro.create_time, ycro.status, yui.phone
+        from yj_conference_room_order ycro
+        left join yj_user_info yui on ycro.user_id = yui.user_id
         <trim prefix="WHERE" prefixOverrides="AND">
-            <if test="orderId != null and orderId != '' ">
-                and order_id = #{orderId,jdbcType=INTEGER}
+            <if test="orderId != null ">
+                and ycro.order_id = #{orderId,jdbcType=INTEGER}
             </if>
             <if test="orderDate != null and orderDate != '' ">
-                and order_date = #{orderDate,jdbcType=VARCHAR}
+                and ycro.order_date = #{orderDate,jdbcType=VARCHAR}
             </if>
-            <if test="timesId != null and timesId != '' ">
-                and times_id = #{timesId,jdbcType=INTEGER}
+            <if test="timesId != null ">
+                and ycro.times_id = #{timesId,jdbcType=INTEGER}
             </if>
-            <if test="roomId != null and roomId != '' ">
-                and room_id = #{roomId,jdbcType=INTEGER}
+            <if test="roomId != null ">
+                and ycro.room_id = #{roomId,jdbcType=INTEGER}
             </if>
-            <if test="userId != null and userId != '' ">
-                and user_id = #{userId,jdbcType=INTEGER}
+            <if test="userId != null ">
+                and ycro.user_id = #{userId,jdbcType=INTEGER}
             </if>
             <if test="userName != null and userName != '' ">
-                and user_name = #{userName,jdbcType=VARCHAR}
+                and ycro.user_name = #{userName,jdbcType=VARCHAR}
             </if>
             <if test="theme != null and theme != '' ">
-                and theme = #{theme,jdbcType=VARCHAR}
+                and ycro.theme = #{theme,jdbcType=VARCHAR}
             </if>
             <if test="createTime != null and createTime != '' ">
-                and create_time = #{createTime,jdbcType=VARCHAR}
+                and ycro.create_time = #{createTime,jdbcType=VARCHAR}
             </if>
             <if test="status != null">
-                and status = #{status,jdbcType=INTEGER}
+                and ycro.status = #{status,jdbcType=INTEGER}
             </if>
         </trim>
     </select>
@@ -70,8 +72,8 @@
             <if test="name != null and name != '' ">
                 and yui.name = #{name,jdbcType=VARCHAR}
             </if>
-            <if test="phone != null and phone != '' ">
-                and yui.phone = #{phone,jdbcType=INTEGER}
+            <if test="phone != null ">
+                and yui.phone = #{phone,jdbcType=BIGINT}
             </if>
             <if test="status != null">
                 and ycro.status = #{status,jdbcType=INTEGER}
@@ -87,6 +89,9 @@
         <if test="orderDate != null and orderDate != '' ">
             and order_date=#{orderDate,jdbcType=VARCHAR}
         </if>
+        <if test="roomId != null ">
+            #{roomId,jdbcType=INTEGER},
+        </if>
         <if test="timesIds != null and timesIds != '' ">
             and times_id in
             <foreach collection="timesIds" index="index" item="item" open="(" separator="," close=")">
@@ -98,19 +103,19 @@
     <insert id="insertSelective" parameterType="com.yjjk.reservation.entity.OrderRecord">
         insert into yj_conference_room_order
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="orderId != null and orderId != '' ">
+            <if test="orderId != null ">
                 order_id,
             </if>
             <if test="orderDate != null and orderDate != '' ">
                 order_date,
             </if>
-            <if test="timesId != null and timesId != '' ">
+            <if test="timesId != null ">
                 times_id,
             </if>
-            <if test="roomId != null and roomId != '' ">
+            <if test="roomId != null ">
                 room_id,
             </if>
-            <if test="userId != null and userId != '' ">
+            <if test="userId != null ">
                 user_id,
             </if>
             <if test="userName != null and userName != '' ">
@@ -127,19 +132,19 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="orderId != null and orderId != '' ">
+            <if test="orderId != null">
                 #{orderId,jdbcType=INTEGER},
             </if>
             <if test="orderDate != null and orderDate != '' ">
                 #{orderDate,jdbcType=VARCHAR},
             </if>
-            <if test="timesId != null and timesId != '' ">
+            <if test="timesId != null">
                 #{timesId,jdbcType=INTEGER},
             </if>
-            <if test="roomId != null and roomId != '' ">
+            <if test="roomId != null ">
                 #{roomId,jdbcType=INTEGER},
             </if>
-            <if test="userId != null and userId != '' ">
+            <if test="userId != null ">
                 #{userId,jdbcType=INTEGER},
             </if>
             <if test="userName != null and userName != '' ">
@@ -161,19 +166,19 @@
         update yj_conference_room_order
         set status = 2
         <trim prefix="WHERE" prefixOverrides="AND">
-            <if test="orderId != null and orderId != '' ">
+            <if test="orderId != null">
                 and order_id=#{orderId,jdbcType=INTEGER}
             </if>
             <if test="orderDate != null and orderDate != '' ">
                 and order_date=#{orderDate,jdbcType=VARCHAR}
             </if>
-            <if test="timesId != null and timesId != '' ">
+            <if test="timesId != null ">
                 and times_id=#{timesId,jdbcType=INTEGER}
             </if>
-            <if test="roomId != null and roomId != '' ">
+            <if test="roomId != null">
                 and room_id=#{roomId,jdbcType=INTEGER}
             </if>
-            <if test="userId != null and userId != '' ">
+            <if test="userId != null ">
                 and user_id=#{userId,jdbcType=INTEGER}
             </if>
             <if test="userName != null and userName != '' ">

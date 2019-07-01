@@ -43,4 +43,5 @@ public class OrderRecord {
     private String path;
     private String startTime;
     private String endTime;
+    private String phone;
 }
