@@ -28,6 +28,7 @@ public class OrderRecord {
     private Integer roomId;
     private Integer userId;
     private String userName;
+    private String theme;
     private String createTime;
     /**
      * 0:未完成预约 1：完成预约 2：取消的预约
@@ -37,7 +38,7 @@ public class OrderRecord {
     /**
      * 新增字段: timesId的拼接字符串
      */
-    private String timesIds;
+    private String[] timesIds;
     private String name;
     private String path;
     private String startTime;

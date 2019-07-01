@@ -9,6 +9,7 @@
         <result column="times_id" property="timesId" jdbcType="INTEGER"/>
         <result column="room_id" property="roomId" jdbcType="INTEGER"/>
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="theme" property="theme" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
 
@@ -19,7 +20,7 @@
     </resultMap>
 
     <select id="getOrderRecords" resultMap="BaseResultMap" parameterType="com.yjjk.reservation.entity.OrderRecord">
-        select order_id, order_date, times_id, room_id, user_id, user_name, create_time, status
+        select order_id, order_date, times_id, room_id, user_id, user_name, theme, create_time, status
         from yj_conference_room_order
         <trim prefix="WHERE" prefixOverrides="AND">
             <if test="orderId != null and orderId != '' ">
@@ -40,6 +41,9 @@
             <if test="userName != null and userName != '' ">
                 and user_name = #{userName,jdbcType=VARCHAR}
             </if>
+            <if test="theme != null and theme != '' ">
+                and theme = #{theme,jdbcType=VARCHAR}
+            </if>
             <if test="createTime != null and createTime != '' ">
                 and create_time = #{createTime,jdbcType=VARCHAR}
             </if>
@@ -49,7 +53,7 @@
         </trim>
     </select>
     <select id="selectHistory" resultMap="BaseResultMap" parameterType="Map">
-        select ycro.order_id, ycro.order_date, ycro.times_id, ycro.room_id, ycro.user_id, ycro.user_name,
+        select ycro.order_id, ycro.order_date, ycro.times_id, ycro.room_id, ycro.theme, ycro.user_id, ycro.user_name,
         jcri.name, jcri.path, ycrt.start_time, ycrt.end_time, ycro.create_time, ycro.status
         from yj_conference_room_order ycro
         left join yj_user_info yui on yui.user_id = ycro.user_id
@@ -76,6 +80,21 @@
         order by ycro.order_id;
     </select>
 
+    <select id="selectByTimesIds" parameterType="com.yjjk.reservation.entity.OrderRecord" resultType="Integer">
+        select count(1)
+        from yj_conference_room_order
+        where status=0
+        <if test="orderDate != null and orderDate != '' ">
+            and order_date=#{orderDate,jdbcType=VARCHAR}
+        </if>
+        <if test="timesIds != null and timesIds != '' ">
+            and times_id in
+            <foreach collection="timesIds" index="index" item="item" open="(" separator="," close=")">
+                #{item, jdbcType=INTEGER}
+            </foreach>
+        </if>
+    </select>
+
     <insert id="insertSelective" parameterType="com.yjjk.reservation.entity.OrderRecord">
         insert into yj_conference_room_order
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -96,6 +115,9 @@
             </if>
             <if test="userName != null and userName != '' ">
                 user_name,
+            </if>
+            <if test="theme != null and theme != '' ">
+                theme,
             </if>
             <if test="createTime != null and createTime != '' ">
                 create_time,
@@ -122,6 +144,9 @@
             </if>
             <if test="userName != null and userName != '' ">
                 #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="theme != null and theme != '' ">
+                #{theme,jdbcType=VARCHAR},
             </if>
             <if test="createTime != null and createTime != '' ">
                 #{createTime,jdbcType=VARCHAR},
@@ -154,6 +179,9 @@
             <if test="userName != null and userName != '' ">
                 and user_name=#{userName,jdbcType=VARCHAR}
             </if>
+            <if test="theme != null and theme != '' ">
+                and theme=#{theme,jdbcType=VARCHAR}
+            </if>
             <if test="createTime != null and createTime != '' ">
                 and create_time=#{createTime,jdbcType=VARCHAR}
             </if>
@@ -165,7 +193,7 @@
     <update id="cancelOrderTask" parameterType="com.yjjk.reservation.entity.OrderRecord">
         update yj_conference_room_order ycro
         set status = 1
-        where CONCAT(order_date,(SELECT ycrt.start_time FROM `yj_conference_room_times` ycrt WHERE ycro.`times_id` = ycrt.times_id)) &lt;= #{localTime,jdbcType=VARCHAR} and status = 0;
+        where CONCAT(order_date,' ',(SELECT ycrt.start_time FROM `yj_conference_room_times` ycrt WHERE ycro.`times_id` = ycrt.times_id)) &lt;= #{localTime,jdbcType=VARCHAR} and status = 0;
     </update>
 </mapper>
 

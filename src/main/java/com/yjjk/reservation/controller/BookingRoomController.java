@@ -201,7 +201,8 @@ public class BookingRoomController extends BaseController {
                           @RequestParam(value = "timesIds", required = true) String timesIds,
                           @RequestParam(value = "roomId", required = true) Integer roomId,
                           @RequestParam(value = "userId", required = true) Integer userId,
-                          @RequestParam(value = "userName") String userName,
+                          @RequestParam(value = "theme", required = false) String theme,
+                          @RequestParam(value = "userName",required = false) String userName,
                           HttpServletRequest request, HttpServletResponse response) {
         /********************** 参数初始化 **********************/
         long startTime = System.currentTimeMillis();
@@ -213,6 +214,16 @@ public class BookingRoomController extends BaseController {
         orderRecord.setUserId(userId);
         if (!StringUtil.isNullorEmpty(userName)) {
             orderRecord.setUserName(userName);
+        }
+        if (!StringUtil.isNullorEmpty(theme)) {
+            orderRecord.setTheme(theme);
+        }
+        orderRecord.setTimesIds(timesIds.split(","));
+        int count = super.orderRecordService.selectByTimesIds(orderRecord);
+        if(count > 0){
+            message = "预约失败,该时段已被预约";
+            returnResult(startTime, request, response, resultCode, message, "");
+            return;
         }
         String[] ids = timesIds.split(",");
         int i = 0;

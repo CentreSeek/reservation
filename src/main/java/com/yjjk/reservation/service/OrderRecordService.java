@@ -63,4 +63,11 @@ public interface OrderRecordService {
      * @return
      */
     int cancelOrderTask(String localTime);
+
+    /**
+     * select---使用timesIds查询预订条目
+     * @param orderRecord
+     * @return
+     */
+    int selectByTimesIds(OrderRecord orderRecord);
 }
