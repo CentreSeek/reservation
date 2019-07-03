@@ -25,4 +25,11 @@ public interface ConferenceRoomService {
      * @return
      */
     public List<ConferenceRoom> getRooms();
+
+    /**
+     * 关闭会议室
+     * @param roomId
+     * @return
+     */
+    int cancleRoom(Integer roomId);
 }

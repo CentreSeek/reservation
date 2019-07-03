@@ -30,8 +30,6 @@ import java.util.List;
 @RequestMapping(value = "/manager")
 public class ManagerController extends BaseController {
 
-    private static final String secretKey = "97495A6982D40CD7F0640072AEE8D058";
-
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public void managerLogin(@RequestParam(value = "account", required = true) String account,
                              @RequestParam(value = "password", required = true) String password,
@@ -40,24 +38,78 @@ public class ManagerController extends BaseController {
         long startTime = System.currentTimeMillis();
         boolean resultCode = false;
         String message = "";
+
+        Manager tempManager = new Manager();
+        tempManager.setAccount(account);
+        List<Manager> list = super.managerService.getManagerInfoSelective(tempManager);
+        if (list == null && list.size() == 0){
+            message = "账户不存在";
+            returnResult(startTime, request, response, resultCode, message, "");
+            return;
+        }
+        Manager manager = list.get(0);
+
     }
 
+
+    /**
+     * 更新管理员信息
+     * @param manager
+     * @param request
+     * @param response
+     */
     @RequestMapping(value = "manager",method = RequestMethod.PUT)
-    public void updateManagerInfo(HttpServletRequest request, HttpServletResponse response) {
+    public void updateManagerInfo(Manager manager, HttpServletRequest request, HttpServletResponse response) {
         /********************** 参数初始化 **********************/
         long startTime = System.currentTimeMillis();
         boolean resultCode = false;
         String message = "";
+        manager.setStatus(0);
 
+        Manager tmpManager = new Manager();
+        tmpManager.setManagerId(manager.getManagerId());
+        List<Manager> list = super.managerService.getManagerInfoSelective(tmpManager);
+        if (list == null || list.size() == 0){
+            message = "账户不存在";
+            returnResult(startTime, request, response, resultCode, message, "");
+            return;
+        }
+        int i = super.managerService.updateSelective(manager);
+        if (i == 0){
+            message = "更新失败";
+            returnResult(startTime, request, response, resultCode, message, "");
+            return;
+        }
+        message = "更新成功";
+        resultCode = true;
+        returnResult(startTime, request, response, resultCode, message, i);
     }
 
+    /**
+     * 查询管理员信息
+     * @param managerId
+     * @param request
+     * @param response
+     */
     @RequestMapping(value = "manager",method = RequestMethod.GET)
-    public void getManagerInfo(HttpServletRequest request, HttpServletResponse response) {
+    public void getManagerInfo(@RequestParam(value = "managerId", required = true) Integer managerId,
+                               HttpServletRequest request, HttpServletResponse response) {
         /********************** 参数初始化 **********************/
         long startTime = System.currentTimeMillis();
         boolean resultCode = false;
         String message = "";
+        Manager manager = new Manager();
+        manager.setManagerId(managerId);
 
+        List<Manager> list = super.managerService.getManagerInfoSelective(manager);
+        if (list == null && list.size() == 0){
+            message = "查询失败,未查询到相关用户信息";
+            returnResult(startTime, request, response, resultCode, message, "");
+            return;
+        }
+        message = "插入成功";
+        resultCode = true;
+        returnResult(startTime, request, response, resultCode, message, list.get(0));
     }
 
     /**
@@ -76,11 +128,6 @@ public class ManagerController extends BaseController {
         boolean resultCode = false;
         String message = "";
 
-        if (!secretKey.equals(secret)){
-            message = "secret验证失败";
-            returnResult(startTime, request, response, resultCode, message, "");
-            return;
-        }
         // 验证account是否已注册
         Manager tempManager = new Manager();
         tempManager.setAccount(manager.getAccount());

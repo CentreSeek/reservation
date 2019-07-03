@@ -34,6 +34,7 @@ public class User {
     private String employeeCode;
     private String openId;
     private String unionId;
+    private String department;
     private Integer status;
     private String createTime;
 

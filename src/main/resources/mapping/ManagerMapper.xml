@@ -5,10 +5,11 @@
 
     <resultMap id="BaseResultMap" type="com.yjjk.reservation.entity.Manager">
         <id column="manager_id" property="managerId" jdbcType="INTEGER"/>
-        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="user_type" property="userType" jdbcType="INTEGER"/>
         <result column="account" property="account" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
         <result column="salt" property="salt" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="INTEGER"/>
         <result column="picture" property="picture" jdbcType="VARCHAR"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="phone" property="phone" jdbcType="VARCHAR"/>
@@ -18,14 +19,14 @@
     </resultMap>
 
     <select id="getManagerInfoSelective" resultMap="BaseResultMap" parameterType="com.yjjk.reservation.entity.Manager">
-        select manager_id, user_id, account, password, salt, picture, name,phone,department, create_time, status
+        select manager_id, user_type, account, sex, picture, name, phone, department, create_time, status
         from yj_manager_info
         <trim prefix="WHERE" prefixOverrides="AND">
             <if test="managerId != null ">
                 and manager_id = #{managerId,jdbcType=INTEGER}
             </if>
-            <if test="userId != null ">
-                and user_id = #{userId,jdbcType=INTEGER}
+            <if test="userType != null ">
+                and user_type = #{userType,jdbcType=INTEGER}
             </if>
             <if test="account != null and account != '' ">
                 and account = #{account,jdbcType=VARCHAR}
@@ -41,8 +42,8 @@
             <if test="managerId != null">
                 manager_id,
             </if>
-            <if test="userId != null">
-                user_id,
+            <if test="userType != null">
+                user_type,
             </if>
             <if test="account != null and account != '' ">
                 account,
@@ -52,6 +53,9 @@
             </if>
             <if test="salt != null and salt != '' ">
                 salt,
+            </if>
+            <if test="sex != null">
+                sex,
             </if>
             <if test="picture != null and picture != '' ">
                 picture,
@@ -76,8 +80,8 @@
             <if test="managerId != null">
                 #{managerId,jdbcType=INTEGER},
             </if>
-            <if test="userId != null">
-                #{userId,jdbcType=INTEGER},
+            <if test="userType != null">
+                #{userType,jdbcType=INTEGER},
             </if>
             <if test="account != null and account != '' ">
                 #{account,jdbcType=VARCHAR},
@@ -87,6 +91,9 @@
             </if>
             <if test="salt != null and salt != '' ">
                 #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=INTEGER},
             </if>
             <if test="picture != null and picture != '' ">
                 #{picture,jdbcType=VARCHAR},
@@ -108,5 +115,45 @@
             </if>
         </trim>
     </insert>
+
+    <update id="updateSelective" parameterType="com.yjjk.reservation.entity.Manager">
+        update yj_manager_info
+        <set>
+            <if test="userType != null">
+                and user_type = #{userType,jdbcType=INTEGER}
+            </if>
+            <if test="account != null and account != '' ">
+                and account = #{account,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null and password != '' ">
+                and password = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="salt != null and salt != '' ">
+                and salt = #{salt,jdbcType=VARCHAR}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex,jdbcType=INTEGER}
+            </if>
+            <if test="picture != null and picture != '' ">
+                and picture = #{picture,jdbcType=VARCHAR}
+            </if>
+            <if test="name != null and name != '' ">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="phone != null and phone != '' ">
+                and phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="department != null and department != '' ">
+                and department = #{department,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                and create_iime = #{createTime,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+        </set>
+        where manager_id = #{managerId,jdbcType=INTEGER} and status = #{status,jdbcType=INTEGER}
+    </update>
 </mapper>
 

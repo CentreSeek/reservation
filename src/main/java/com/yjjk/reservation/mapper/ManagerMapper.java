@@ -32,11 +32,18 @@ public interface ManagerMapper {
     List<Manager> getManagerInfoSelective(Manager manager);
 
     /**
-     * insert----新增管理员
+     * insert---新增管理员
      * @param manager
      * @return
      */
     int insertSelective(Manager manager);
+
+    /**
+     * update---更新管理员信息
+     * @param manager
+     * @return
+     */
+    int updateSelective(Manager manager);
 
 
 

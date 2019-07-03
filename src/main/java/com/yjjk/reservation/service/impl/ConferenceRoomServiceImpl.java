@@ -30,4 +30,14 @@ public class ConferenceRoomServiceImpl extends BaseService implements Conference
     public List<ConferenceRoom> getRooms() {
         return super.conferenceRoomMapper.getRooms();
     }
+
+    @Override
+    public int cancleRoom(Integer roomId) {
+        ConferenceRoom conferenceRoom = new ConferenceRoom();
+        conferenceRoom.setRoomId(roomId);
+        conferenceRoom.setStatus(2);
+        int i = super.conferenceRoomMapper.updateSelective(conferenceRoom);
+        return i;
+    }
+
 }

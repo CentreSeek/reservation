@@ -36,4 +36,10 @@ public interface ManagerService {
      */
     int insertSelective(Manager manager);
 
+    /**
+     * update---更新管理员信息
+     * @param manager
+     * @return
+     */
+    int updateSelective(Manager manager);
 }

@@ -20,13 +20,14 @@ import lombok.Data;
 @Data
 public class Manager {
     private Integer managerId;
-    private Integer userId;
+    /*用户类型0：高级管理员 1：健康助手 2：会议室管家*/
+    private Integer userType;
     private String account;
     private String password;
-    /**
-     * 加盐字串
-     */
+    /*加盐字串*/
     private String salt;
+    /*0：女 1：男*/
+    private Integer sex;
     private String picture;
     private String name;
     private String phone;

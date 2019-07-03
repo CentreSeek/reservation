@@ -28,4 +28,11 @@ public interface ConferenceRoomMapper {
      * @return
      */
     List<ConferenceRoom> getRooms();
+
+    /**
+     * update---更新会议室信息
+     * @param conferenceRoom
+     * @return
+     */
+    int updateSelective(ConferenceRoom conferenceRoom);
 }

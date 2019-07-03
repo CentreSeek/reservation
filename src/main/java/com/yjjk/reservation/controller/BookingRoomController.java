@@ -107,6 +107,30 @@ public class BookingRoomController extends BaseController {
     }
 
     /**
+     * 关闭会议室
+     * @param roomId
+     * @param request
+     * @param response
+     */
+    @RequestMapping(value = "/room", method = RequestMethod.DELETE)
+    public void cancleRoom(@RequestParam(value = "roomId") Integer roomId,
+                           HttpServletRequest request, HttpServletResponse response) {
+        /********************** 参数初始化 **********************/
+        long startTime = System.currentTimeMillis();
+        boolean resultCode = false;
+        String message = "";
+
+        int i = super.conferenceRoomService.cancleRoom(roomId);
+        if (i == 0){
+            message = "关闭失败";
+            returnResult(startTime, request, response, resultCode, message, "");
+            return;
+        }
+        resultCode = true;
+        message = "关闭成功";
+        returnResult(startTime, request, response, resultCode, message, i);
+    }
+    /**
      * 绑定微信
      *
      * @param openId

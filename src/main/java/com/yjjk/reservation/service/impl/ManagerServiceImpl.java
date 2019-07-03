@@ -13,6 +13,8 @@ package com.yjjk.reservation.service.impl;
 import com.yjjk.reservation.entity.Manager;
 import com.yjjk.reservation.service.BaseService;
 import com.yjjk.reservation.service.ManagerService;
+import com.yjjk.reservation.utility.PasswordUtils;
+import com.yjjk.reservation.utility.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,5 +36,17 @@ public class ManagerServiceImpl extends BaseService implements ManagerService {
     public int insertSelective(Manager manager) {
         manager.setStatus(0);
         return super.managerMapper.insertSelective(manager);
+    }
+
+    @Override
+    public int updateSelective(Manager manager) {
+        // 用户修改密码则生成新的盐并加密密码
+        if (!StringUtils.isNullorEmpty(manager.getPassword())){
+            String salt = PasswordUtils.salt();
+            String password = PasswordUtils.generate(manager.getPassword(), salt);
+            manager.setPassword(password);
+            manager.setSalt(salt);
+        }
+        return super.managerMapper.updateSelective(manager);
     }
 }

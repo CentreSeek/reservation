@@ -19,7 +19,7 @@
         select room_id, name, description, path, province, city, company_id, create_time, status
         from yj_conference_room_info
         <trim prefix="WHERE" prefixOverrides="AND">
-            <if test="roomId != null and userId != '' ">
+            <if test="roomId != null ">
                 and room_id = #{roomId,jdbcType=INTEGER}
             </if>
             <if test="name != null and name != '' ">
@@ -37,7 +37,7 @@
             <if test="city != null and city != '' ">
                 and city = #{city,jdbcType=VARCHAR}
             </if>
-            <if test="companyId!=null and companyId!=''">
+            <if test="companyId!=null">
                 and company_id = #{companyId,jdbcType=INTEGER}
             </if>
             <if test="createTime != null and createTime != '' ">
@@ -48,5 +48,35 @@
             </if>
         </trim>
     </select>
+    <update id="updateSelective" parameterType="com.yjjk.reservation.entity.ConferenceRoom">
+        update yj_conference_room_info
+        <set>
+            <if test="name != null and name != '' ">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="description != null and description != '' ">
+                and description = #{description,jdbcType=VARCHAR}
+            </if>
+            <if test="path != null and path != '' ">
+                and path = #{userType,path=VARCHAR}
+            </if>
+            <if test="province != null and province != '' ">
+                and province = #{province,jdbcType=VARCHAR}
+            </if>
+            <if test="city != null and city != '' ">
+                and city = #{city,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId!=null">
+                and company_id = #{companyId,jdbcType=INTEGER}
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                and create_time = #{createTime,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+        </set>
+        where room_id = #{roomId,jdbcType=INTEGER}
+    </update>
 </mapper>
 
