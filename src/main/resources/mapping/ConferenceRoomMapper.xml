@@ -18,7 +18,7 @@
     <select id="getRooms" resultMap="BaseResultMap">
         select room_id, name, description, path, province, city, company_id, create_time, status
         from yj_conference_room_info
-        <trim prefix="WHERE" prefixOverrides="AND">
+        where status  <![CDATA[!= ]]> 1
             <if test="roomId != null ">
                 and room_id = #{roomId,jdbcType=INTEGER}
             </if>
@@ -43,10 +43,6 @@
             <if test="createTime != null and createTime != '' ">
                 and create_time = #{createTime,jdbcType=VARCHAR}
             </if>
-            <if test="status != null">
-                and status = #{status,jdbcType=INTEGER}
-            </if>
-        </trim>
     </select>
     <update id="updateSelective" parameterType="com.yjjk.reservation.entity.ConferenceRoom">
         update yj_conference_room_info
