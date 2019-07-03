@@ -31,7 +31,6 @@ public class OrderRecordServiceImpl extends BaseService implements OrderRecordSe
 
     @Override
     public List<OrderRecord> getOrderRecords(OrderRecord orderRecord) {
-        orderRecord.setStatus(0);
         return super.orderRecordMapper.getOrderRecords(orderRecord);
     }
 
@@ -71,6 +70,8 @@ public class OrderRecordServiceImpl extends BaseService implements OrderRecordSe
                 orderHistory.setStatus(orderRecord.getStatus());
                 orderHistory.setOrderDate(orderRecord.getOrderDate());
                 orderHistory.setEndTime(orderRecord.getEndTime());
+                orderHistory.setCity(orderRecord.getCity());
+                orderHistory.setProvince(orderRecord.getProvince());
             }
             if ("".equals(orderIds)) {
                 orderIds = orderRecord.getOrderId().toString();

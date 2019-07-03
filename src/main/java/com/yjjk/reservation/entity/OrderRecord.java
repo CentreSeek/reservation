@@ -44,4 +44,6 @@ public class OrderRecord {
     private String startTime;
     private String endTime;
     private String phone;
+    private String city;
+    private String province;
 }
