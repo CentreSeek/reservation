@@ -47,7 +47,7 @@
             <if test="createTime != null and createTime != '' ">
                 and create_time = #{createTime,jdbcType=VARCHAR}
             </if>
-            <if test="status != null'">
+            <if test="status != null">
                 and status = #{status,jdbcType=INTEGER}
             </if>
         </trim>
