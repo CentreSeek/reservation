@@ -28,7 +28,7 @@ public interface UserService {
      * @param userInfo
      * @return
      */
-    public List<User> getUserInfoBySelect(User userInfo);
+    List<User> getUserInfoBySelect(User userInfo);
 
     /**
      * select---根据openId和unionId查询用户信息
@@ -36,7 +36,7 @@ public interface UserService {
      * @param unionId
      * @return
      */
-    public List<User> getUserInfoByWX(String openId, String unionId);
+    List<User> getUserInfoByWX(String openId, String unionId);
 
     /**
      * select---使用name和phone查询用户
@@ -44,14 +44,14 @@ public interface UserService {
      * @param phone
      * @return
      */
-    public List<User> getUserInfo(String name, Long phone);
+    List<User> getUserInfo(String name, Long phone);
 
     /**
      * update---更新用户信息
      * @param userInfo
      * @return
      */
-    public int updateUserInfoBySelect(User userInfo);
+    int updateUserInfoBySelect(User userInfo);
 
     /**
      * update---绑定微信
@@ -61,5 +61,6 @@ public interface UserService {
      * @param phone
      * @return
      */
-    public int bandingWx(String openId, String unionId, String name, Long phone);
+    int bandingWx(String openId, String unionId, String name, Long phone);
+
 }

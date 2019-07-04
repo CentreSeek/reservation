@@ -20,39 +20,39 @@
         <result column="city" property="city" jdbcType="VARCHAR"/>
         <result column="province" property="province" jdbcType="VARCHAR"/>
     </resultMap>
-
     <select id="getOrderRecords" resultMap="BaseResultMap" parameterType="com.yjjk.reservation.entity.OrderRecord">
-        select ycro.order_id, ycro.order_date, ycro.times_id, ycro.room_id, ycro.user_id, ycro.user_name, ycro.theme, ycro.create_time, ycro.status, yui.phone
+        select ycro.order_id, ycro.order_date, ycro.times_id, ycro.room_id, ycro.user_id, ycro.user_name, ycro.theme,
+        ycro.create_time, ycro.status, yui.phone
         from yj_conference_room_order ycro
         left join yj_user_info yui on ycro.user_id = yui.user_id
         where (ycro.status = 0 or ycro.status = 3)
-            <if test="orderId != null ">
-                and ycro.order_id = #{orderId,jdbcType=INTEGER}
-            </if>
-            <if test="orderDate != null and orderDate != '' ">
-                and ycro.order_date = #{orderDate,jdbcType=VARCHAR}
-            </if>
-            <if test="timesId != null ">
-                and ycro.times_id = #{timesId,jdbcType=INTEGER}
-            </if>
-            <if test="roomId != null ">
-                and ycro.room_id = #{roomId,jdbcType=INTEGER}
-            </if>
-            <if test="userId != null ">
-                and ycro.user_id = #{userId,jdbcType=INTEGER}
-            </if>
-            <if test="userName != null and userName != '' ">
-                and ycro.user_name = #{userName,jdbcType=VARCHAR}
-            </if>
-            <if test="theme != null and theme != '' ">
-                and ycro.theme = #{theme,jdbcType=VARCHAR}
-            </if>
-            <if test="createTime != null and createTime != '' ">
-                and ycro.create_time = #{createTime,jdbcType=VARCHAR}
-            </if>
-            <if test="status != null">
-                and ycro.status = #{status,jdbcType=INTEGER}
-            </if>
+        <if test="orderId != null ">
+            and ycro.order_id = #{orderId,jdbcType=INTEGER}
+        </if>
+        <if test="orderDate != null and orderDate != '' ">
+            and ycro.order_date = #{orderDate,jdbcType=VARCHAR}
+        </if>
+        <if test="timesId != null ">
+            and ycro.times_id = #{timesId,jdbcType=INTEGER}
+        </if>
+        <if test="roomId != null ">
+            and ycro.room_id = #{roomId,jdbcType=INTEGER}
+        </if>
+        <if test="userId != null ">
+            and ycro.user_id = #{userId,jdbcType=INTEGER}
+        </if>
+        <if test="userName != null and userName != '' ">
+            and ycro.user_name = #{userName,jdbcType=VARCHAR}
+        </if>
+        <if test="theme != null and theme != '' ">
+            and ycro.theme = #{theme,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null and createTime != '' ">
+            and ycro.create_time = #{createTime,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            and ycro.status = #{status,jdbcType=INTEGER}
+        </if>
     </select>
     <select id="selectHistory" resultMap="BaseResultMap" parameterType="Map">
         select ycro.order_id, ycro.order_date, ycro.times_id, ycro.room_id, ycro.theme, ycro.user_id, ycro.user_name,
@@ -100,6 +100,15 @@
         </if>
     </select>
 
+    <select id="getRecords2Excel" resultType="com.yjjk.reservation.entity.OrderRecords2Excel">
+        SELECT order_date as orderDate, CONCAT(ycrt.start_time,'~',ycrt.end_time) AS times, ycri.`name` as roomName, ycro.`user_name` as userName, ycro.`theme`, ycro.`status`, yci.`name` AS orderUser, ycro.`create_time` as createTime
+        FROM yj_conference_room_order ycro
+        LEFT JOIN `yj_user_info` yci ON ycro.`user_id` = yci.`user_id`
+        LEFT JOIN `yj_conference_room_info` ycri ON ycro.`room_id` = ycri.`room_id`
+        LEFT JOIN `yj_conference_room_times` ycrt ON ycro.`times_id` = ycrt.`times_id`
+        WHERE ycro.`status` != 3
+        ORDER BY ycro.`status`, ycro.`create_time` DESC
+    </select>
     <insert id="insertSelective" parameterType="com.yjjk.reservation.entity.OrderRecord">
         insert into yj_conference_room_order
         <trim prefix="(" suffix=")" suffixOverrides=",">

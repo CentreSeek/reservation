@@ -12,6 +12,7 @@ package com.yjjk.reservation.service;
 
 import com.yjjk.reservation.entity.OrderHistory;
 import com.yjjk.reservation.entity.OrderRecord;
+import com.yjjk.reservation.entity.OrderRecords2Excel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -70,4 +71,10 @@ public interface OrderRecordService {
      * @return
      */
     int selectByTimesIds(OrderRecord orderRecord);
+
+    /**
+     * select---获取会议记录数据，导出为excel
+     * @return
+     */
+    List<OrderRecords2Excel> getRecords2Excel();
 }

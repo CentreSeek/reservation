@@ -12,6 +12,7 @@ package com.yjjk.reservation.service.impl;
 
 import com.yjjk.reservation.entity.OrderHistory;
 import com.yjjk.reservation.entity.OrderRecord;
+import com.yjjk.reservation.entity.OrderRecords2Excel;
 import com.yjjk.reservation.service.BaseService;
 import com.yjjk.reservation.service.OrderRecordService;
 import com.yjjk.reservation.utility.DateUtil;
@@ -72,6 +73,8 @@ public class OrderRecordServiceImpl extends BaseService implements OrderRecordSe
                 orderHistory.setEndTime(orderRecord.getEndTime());
                 orderHistory.setCity(orderRecord.getCity());
                 orderHistory.setProvince(orderRecord.getProvince());
+                orderHistory.setTheme(orderRecord.getTheme());
+
             }
             if ("".equals(orderIds)) {
                 orderIds = orderRecord.getOrderId().toString();
@@ -100,5 +103,10 @@ public class OrderRecordServiceImpl extends BaseService implements OrderRecordSe
     @Override
     public int selectByTimesIds(OrderRecord orderRecord) {
         return super.orderRecordMapper.selectByTimesIds(orderRecord);
+    }
+
+    @Override
+    public List<OrderRecords2Excel> getRecords2Excel() {
+        return super.orderRecordMapper.getRecords2Excel();
     }
 }

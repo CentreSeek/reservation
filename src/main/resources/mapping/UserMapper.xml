@@ -17,7 +17,7 @@
     </resultMap>
 
     <select id="getUserInfoBySelect" resultMap="BaseResultMap" parameterType="com.yjjk.reservation.entity.User">
-        select user_id, name, phone, user_type, employee_code, open_id, union_id, create_time, status
+        select user_id, name, phone, user_type, employee_code, department, open_id, union_id, create_time, status
         from yj_user_info
         <trim prefix="WHERE" prefixOverrides="AND">
             <if test="userId != null ">
@@ -79,7 +79,7 @@
             <if test="createTime != null and createTime != '' ">
                 create_time = #{createTime,jdbcType=VARCHAR},
             </if>
-            <if test="status != null'">
+            <if test="status != null">
                 status = #{status,jdbcType=INTEGER},
             </if>
         </set>

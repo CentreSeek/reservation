@@ -12,6 +12,7 @@ package com.yjjk.reservation.mapper;
 
 import com.yjjk.reservation.entity.ConferenceRoom;
 import com.yjjk.reservation.entity.OrderRecord;
+import com.yjjk.reservation.entity.OrderRecords2Excel;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.HashMap;
@@ -66,4 +67,10 @@ public interface OrderRecordMapper {
      * @return
      */
     int selectByTimesIds(OrderRecord orderRecord);
+
+    /**
+     * select---获取会议记录数据，导出为excel
+     * @return
+     */
+    List<OrderRecords2Excel> getRecords2Excel();
 }

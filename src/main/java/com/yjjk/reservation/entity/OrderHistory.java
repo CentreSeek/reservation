@@ -44,4 +44,5 @@ public class OrderHistory {
     private String endTime;
     private String city;
     private String province;
+    private String theme;
 }
