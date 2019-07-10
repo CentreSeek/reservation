@@ -16,8 +16,8 @@ import java.security.MessageDigest;
 import java.util.Random;
 
 /**
- * @Description: 加密工具
  * @author CentreS
+ * @Description: 加密工具
  * @create 2019/7/1
  */
 public class PasswordUtils {
@@ -26,7 +26,7 @@ public class PasswordUtils {
     private static char[] hex = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     /**
-     *自定义简单生成盐，是一个随机生成的长度为16的字符串，每一个字符是随机的十六进制字符
+     * 自定义简单生成盐，是一个随机生成的长度为16的字符串，每一个字符是随机的十六进制字符
      */
     public static String salt() {
         Random random = new Random();
@@ -39,15 +39,17 @@ public class PasswordUtils {
 
     /**
      * 生成含随机盐的密码
+     *
      * @param password
      * @return
      */
     public static String generate(String password) {
-        return generate(password,salt());
+        return generate(password, salt());
     }
 
     /**
      * 生成含盐密码
+     *
      * @param password
      * @param salt
      * @return
@@ -59,7 +61,7 @@ public class PasswordUtils {
             }
         }
         password = md5Hex(password + salt);
-        System.out.println("加盐后的password="+password);
+        System.out.println("加盐后的password=" + password);
         char[] cs1 = password.toCharArray();
         char[] cs2 = salt.toCharArray();
         char[] cs = new char[48];
@@ -70,6 +72,7 @@ public class PasswordUtils {
         }
         return new String(cs);
     }
+
     /**
      * 校验密码是否正确
      */
@@ -83,7 +86,6 @@ public class PasswordUtils {
             cs2[i / 3] = cs[i + 1];
         }
         String salt = new String(cs2);
-        System.out.println("验证salt="+salt);
         return md5Hex(password + salt).equals(new String(cs1));
     }
 
@@ -101,6 +103,9 @@ public class PasswordUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(salt()+salt());
+        String md5 = "73b5A661fb1b797d6b1C1b5e6A7cC686b95d43abE0479584";
+        String password = "19924210";
+        System.out.println(verify(password,md5));
+
     }
 }

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjjk.reservation.mapper.RoleMapper">
+
+    <resultMap id="BaseResultMap" type="com.yjjk.reservation.entity.Role">
+        <id column="role_id" property="roleId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <collection property="authorities" ofType="com.yjjk.reservation.entity.Authority" javaType="ArrayList">
+            <id column="authority_id" property="authorityId" jdbcType="INTEGER"/>
+            <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+            <result column="authority_name" property="name" jdbcType="VARCHAR"/>
+            <result column="url" property="url" jdbcType="VARCHAR"/>
+            <result column="authority_create_time" property="createTime" jdbcType="VARCHAR"/>
+            <result column="authority_status" property="status" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+    <!--    <select id="getRoleInfoSele" resultMap="BaseResultMap" parameterType="com.yjjk.reservation.entity.Role">-->
+    <!--        select manager_id, user_type, account, sex, picture, name, phone, department, create_time, status-->
+    <!--        from yj_manager_info-->
+    <!--        <trim prefix="WHERE" prefixOverrides="AND">-->
+    <!--            <if test="managerId != null ">-->
+    <!--                and manager_id = #{managerId,jdbcType=INTEGER}-->
+    <!--            </if>-->
+    <!--            <if test="userType != null ">-->
+    <!--                and user_type = #{userType,jdbcType=INTEGER}-->
+    <!--            </if>-->
+    <!--            <if test="account != null and account != '' ">-->
+    <!--                and account = #{account,jdbcType=VARCHAR}-->
+    <!--            </if>-->
+    <!--            <if test="status != null">-->
+    <!--                and status = #{status,jdbcType=INTEGER}-->
+    <!--            </if>-->
+    <!--        </trim>-->
+    <!--    </select>-->
+
+    <select id="getRoleInfo" resultMap="BaseResultMap" parameterType="com.yjjk.reservation.entity.Role">
+        select yri.role_id, yri.name, yri.create_time, yri.status, yai.authority_id, yai.parent_id, yai.name as
+        authority_name, yai.url, yai.create_time as authority_create_time, yai.status as authority_status
+        from yj_role_info yri
+        left join yj_relation_role_authority yrra on yri.role_id = yrra.role_id
+        left join yj_authority_info yai on yrra.authority_id = yai.authority_id
+        where yri.status = 0 and yai.status = 0
+        <if test="roleId != null">
+            and yri.role_id = #{roleId,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <insert id="insertSelective" parameterType="com.yjjk.reservation.entity.Role">
+        insert into yj_role_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleId != null">
+                role_id,
+            </if>
+            <if test="name != null and name !='' ">
+                name,
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                create_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roleId != null">
+                #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null and account != '' ">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSelective" parameterType="com.yjjk.reservation.entity.Role">
+        update yj_role_info
+        <set>
+            <if test="roleId != null">
+                and role_id = #{roleId,jdbcType=INTEGER}
+            </if>
+            <if test="name != null and name != '' ">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                and create_iime = #{createTime,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+        </set>
+    </update>
+
+    <!-- relation: role & authority -->
+    <insert id="insertRelationSelective" parameterType="com.yjjk.reservation.entity.RoleAndAuthority">
+        insert into yj_relation_role_authority
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="relId != null">
+                rel_id,
+            </if>
+            <if test="roleId != null">
+                role_id,
+            </if>
+            <if test="authorityId != null">
+                authority_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="relId != null">
+                #{relId,jdbcType=INTEGER},
+            </if>
+            <if test="roleId != null ">
+                #{roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="authorityId != null">
+                #{authorityId,jdbcType=INTEGER},
+            </if>
+            <foreach item="item" collection="authorityIds" separator="," open="("
+                     close=")" index="">
+                #{item}
+            </foreach>
+        </trim>
+    </insert>
+    <delete id="deleteByRoleId" parameterType="com.yjjk.reservation.entity.RoleAndAuthority">
+        delete from yj_relation_role_authority
+        <where>
+            <if test="relId != null">
+                rel_id = #{relId,jdbcType=INTEGER}
+            </if>
+            <if test="roleId != null ">
+                and role_id = #{roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="authorityId != null">
+                and authority_id = #{authorityId,jdbcType=INTEGER},
+            </if>
+            <foreach item="item" collection="authorityIds" separator="," open="("
+                     close=")" index="">
+                and authority_id = #{item}
+            </foreach>
+        </where>
+    </delete>
+</mapper>
+

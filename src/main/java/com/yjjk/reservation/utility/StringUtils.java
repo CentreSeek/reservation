@@ -10,6 +10,7 @@
  */
 package com.yjjk.reservation.utility;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,6 +71,23 @@ public class StringUtils {
             dest = m.replaceAll("");
         }
         return dest;
+    }
+
+    /**
+     * 工具类：判断list是否为空
+     * @param list
+     * @return
+     */
+    public static boolean listIsNullOrEmpty(List list){
+        if (list == null){
+            return true;
+        }else {
+            if (list.size() == 0){
+                return true;
+            }else {
+                return false;
+            }
+        }
     }
 
 //    public static void main(String[] args) {

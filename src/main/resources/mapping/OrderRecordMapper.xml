@@ -90,7 +90,7 @@
             and order_date=#{orderDate,jdbcType=VARCHAR}
         </if>
         <if test="roomId != null ">
-            and #{roomId,jdbcType=INTEGER}
+            and room_id = #{roomId,jdbcType=INTEGER}
         </if>
         <if test="timesIds != null and timesIds != '' ">
             and times_id in

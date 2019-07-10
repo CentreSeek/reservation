@@ -11,6 +11,7 @@
 package com.yjjk.reservation.service;
 
 import com.yjjk.reservation.mapper.*;
+import org.apache.log4j.Logger;
 
 import javax.annotation.Resource;
 
@@ -20,6 +21,7 @@ import javax.annotation.Resource;
  * @create 2019-06-20
  */
 public class BaseService {
+    protected static Logger logger = Logger.getLogger(BaseService.class);
     @Resource
     protected TimesMapper timesMapper;
     @Resource
@@ -30,4 +32,8 @@ public class BaseService {
     protected OrderRecordMapper orderRecordMapper;
     @Resource
     protected ManagerMapper managerMapper;
+    @Resource
+    protected AuthorityMapper authorityMapper;
+    @Resource
+    protected RoleMapper roleMapper;
 }

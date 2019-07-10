@@ -32,7 +32,7 @@ import java.util.Map;
 
 public class BaseController {
 
-    private static Logger logger = Logger.getLogger("weblogger");
+    protected static Logger logger = Logger.getLogger(BaseController.class);
 
     private static String RESULT_CODE_SUCCESS = "200";
     private static String RESULT_CODE_FAIL = "300";
@@ -47,6 +47,10 @@ public class BaseController {
     protected OrderRecordService orderRecordService;
     @Resource
     protected ManagerService managerService;
+    @Resource
+    protected AuthorityService authorityService;
+    @Resource
+    protected RoleService roleService;
 
     /**
      * WEB端返回值，判断是否过期

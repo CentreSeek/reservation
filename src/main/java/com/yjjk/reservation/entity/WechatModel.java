@@ -1,6 +1,7 @@
 package com.yjjk.reservation.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * @author CentreS
@@ -8,6 +9,7 @@ import lombok.Data;
  * @create 2019-06-20
  */
 @Data
+@Accessors(chain = true)
 public class WechatModel {
 
 	/**

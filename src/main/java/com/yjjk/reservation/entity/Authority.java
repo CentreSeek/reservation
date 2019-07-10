@@ -1,9 +1,9 @@
 /**
  * Copyright (C), 2019, 义金(杭州)健康科技有限公司
- * FileName: OrderRecords2Excel
+ * FileName: Authority
  * Author:   CentreS
- * Date:     2019/7/3 16:24
- * Description: 导出为excel的预约记录
+ * Date:     2019/7/8 10:51
+ * Description: 角色权限表
  * History:
  * <author>          <time>          <version>          <desc>
  * 作者姓名           修改时间           版本号              描述
@@ -13,22 +13,25 @@ package com.yjjk.reservation.entity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
- * @Description: 导出为excel的预约记录
+ * @Description: 角色权限表
  * @author CentreS
- * @create 2019/7/3
+ * @create 2019/7/8
  */
 @Data
 @Accessors(chain = true)
-public class OrderRecords2Excel {
+public class Authority {
 
-    private String orderDate;
-    private String times;
-    private String roomName;
-    private String userName;
-    private String theme;
-    private Integer status;
-    private String orderUser;
+    private Integer authorityId;
+    /** 父权限id，为0则为根权限 */
+    private String parentId;
+    private String name;
+    private String url;
     private String createTime;
+    private Integer status;
 
+    /** 子标签 */
+    private List<Authority> child;
 }

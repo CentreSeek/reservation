@@ -11,8 +11,10 @@
 package com.yjjk.reservation.mapper;
 
 import com.yjjk.reservation.entity.Manager;
+import com.yjjk.reservation.entity.ManagerAndRole;
 import com.yjjk.reservation.entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 
 import java.util.List;
 
@@ -36,6 +38,7 @@ public interface ManagerMapper {
      * @param manager
      * @return
      */
+//    @Options(useGeneratedKeys = true, keyProperty = "managerId", keyColumn = "manager_id")
     int insertSelective(Manager manager);
 
     /**
@@ -44,6 +47,29 @@ public interface ManagerMapper {
      * @return
      */
     int updateSelective(Manager manager);
+
+    /**************************************** 角色管理模块 ****************************************/
+
+    /**
+     * select---查询用户角色数量
+     * @param managerId
+     * @return
+     */
+    int selectCountByManagerId(Integer managerId);
+
+    /**
+     * insert---为用户赋予角色
+     * @param managerAndRole
+     * @return
+     */
+    int insertRelationSelective(ManagerAndRole managerAndRole);
+
+    /**
+     * delete---删除用户角色关联
+     * @param managerAndRole
+     * @return
+     */
+    int deleteManagerRole(ManagerAndRole managerAndRole);
 
 
 

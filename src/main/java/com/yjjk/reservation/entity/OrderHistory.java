@@ -11,6 +11,7 @@
 package com.yjjk.reservation.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * @Description: 个人预约历史记录
@@ -18,6 +19,7 @@ import lombok.Data;
  * @create 2019-06-25
  */
 @Data
+@Accessors(chain = true)
 public class OrderHistory {
 
     /**

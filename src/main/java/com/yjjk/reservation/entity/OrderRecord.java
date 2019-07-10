@@ -11,6 +11,7 @@
 package com.yjjk.reservation.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import java.util.List;
  * @create 2019-06-21
  */
 @Data
+@Accessors(chain = true)
 public class OrderRecord {
 
     private Integer orderId;

@@ -23,23 +23,40 @@ import java.util.List;
 public interface ManagerService {
 
     /**
-     * select---查询管理员用户信息
+     * 查询管理员用户信息
      * @param manager
      * @return
      */
     List<Manager> getManagerInfoSelective(Manager manager);
 
     /**
-     * insert----新增管理员
+     * 新增管理员
      * @param manager
      * @return
      */
     int insertSelective(Manager manager);
 
     /**
-     * update---更新管理员信息
+     * 更新管理员信息
      * @param manager
      * @return
      */
     int updateSelective(Manager manager);
+
+    /**
+     * 更新管理员角色
+     * @param managerId
+     * @param roleId
+     * @return
+     */
+    int updateManagerRole(Integer managerId, Integer roleId);
+
+    /**
+     * 删除管理员角色
+     * @param managerId
+     * @return
+     */
+    int deleteManagerRole(Integer managerId);
+
+
 }

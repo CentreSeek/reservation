@@ -11,6 +11,7 @@
 package com.yjjk.reservation.service.impl;
 
 import com.yjjk.reservation.entity.Manager;
+import com.yjjk.reservation.entity.ManagerAndRole;
 import com.yjjk.reservation.service.BaseService;
 import com.yjjk.reservation.service.ManagerService;
 import com.yjjk.reservation.utility.PasswordUtils;
@@ -48,5 +49,23 @@ public class ManagerServiceImpl extends BaseService implements ManagerService {
             manager.setSalt(salt);
         }
         return super.managerMapper.updateSelective(manager);
+    }
+
+    @Override
+    public int updateManagerRole(Integer managerId, Integer roleId) {
+        ManagerAndRole managerAndRole = new ManagerAndRole();
+        managerAndRole.setManagerId(managerId);
+        managerAndRole.setRoleId(roleId);
+        super.managerMapper.deleteManagerRole(managerAndRole);
+        int i = super.managerMapper.insertRelationSelective(managerAndRole);
+        return i;
+    }
+
+    @Override
+    public int deleteManagerRole(Integer managerId) {
+        ManagerAndRole managerAndRole = new ManagerAndRole();
+        managerAndRole.setManagerId(managerId);
+        int i = super.managerMapper.deleteManagerRole(managerAndRole);
+        return i;
     }
 }

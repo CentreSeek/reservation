@@ -11,6 +11,7 @@
 package com.yjjk.reservation.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * @Description: 会议室信息
@@ -18,6 +19,7 @@ import lombok.Data;
  * @create 2019-06-21
  */
 @Data
+@Accessors(chain = true)
 public class ConferenceRoom {
     private Integer roomId;
     private String name;

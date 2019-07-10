@@ -13,6 +13,7 @@ package com.yjjk.reservation.entity;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * @Description: 员工信息
@@ -20,8 +21,7 @@ import lombok.Setter;
  * @create 2019-06-19
  */
 @Data
-@Getter
-@Setter
+@Accessors(chain = true)
 public class User {
 
     private Integer userId;

@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * @Description: 时间工具
@@ -42,5 +43,4 @@ public class DateUtil {
         }
         return weekDays[w];
     }
-
 }

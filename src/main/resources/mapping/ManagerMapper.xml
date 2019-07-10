@@ -16,11 +16,14 @@
         <result column="department" property="department" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
+
+        <result column="role_id" property="roleId" jdbcType="INTEGER"/>
     </resultMap>
 
     <select id="getManagerInfoSelective" resultMap="BaseResultMap" parameterType="com.yjjk.reservation.entity.Manager">
-        select manager_id, user_type, account, sex, picture, name, phone, department, create_time, status
-        from yj_manager_info
+        select ymi.manager_id, ymi.user_type, ymi.account, ymi.password, ymi.sex, ymi.picture, ymi.name, ymi.phone, ymi.department, ymi.create_time, ymi.status, yrmr.role_id
+        from yj_manager_info ymi
+        left join yj_relation_manager_role yrmr on ymi.manager_id = yrmr.manager_id
         <trim prefix="WHERE" prefixOverrides="AND">
             <if test="managerId != null ">
                 and manager_id = #{managerId,jdbcType=INTEGER}
@@ -36,7 +39,7 @@
             </if>
         </trim>
     </select>
-    <insert id="insertSelective" parameterType="com.yjjk.reservation.entity.Manager">
+    <insert id="insertSelective" parameterType="com.yjjk.reservation.entity.Manager"  useGeneratedKeys = "true" keyProperty = "managerId" keyColumn = "manager_id">
         insert into yj_manager_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="managerId != null">
@@ -120,40 +123,85 @@
         update yj_manager_info
         <set>
             <if test="userType != null">
-                and user_type = #{userType,jdbcType=INTEGER}
+                user_type = #{userType,jdbcType=INTEGER},
             </if>
             <if test="account != null and account != '' ">
-                and account = #{account,jdbcType=VARCHAR}
+                account = #{account,jdbcType=VARCHAR},
             </if>
             <if test="password != null and password != '' ">
-                and password = #{password,jdbcType=VARCHAR}
+                password = #{password,jdbcType=VARCHAR},
             </if>
             <if test="salt != null and salt != '' ">
-                and salt = #{salt,jdbcType=VARCHAR}
+                salt = #{salt,jdbcType=VARCHAR},
             </if>
             <if test="sex != null">
-                and sex = #{sex,jdbcType=INTEGER}
+                sex = #{sex,jdbcType=INTEGER},
             </if>
             <if test="picture != null and picture != '' ">
-                and picture = #{picture,jdbcType=VARCHAR}
+                picture = #{picture,jdbcType=VARCHAR},
             </if>
             <if test="name != null and name != '' ">
-                and name = #{name,jdbcType=VARCHAR}
+                name = #{name,jdbcType=VARCHAR},
             </if>
             <if test="phone != null and phone != '' ">
-                and phone = #{phone,jdbcType=VARCHAR}
+                phone = #{phone,jdbcType=VARCHAR},
             </if>
             <if test="department != null and department != '' ">
-                and department = #{department,jdbcType=VARCHAR}
+                department = #{department,jdbcType=VARCHAR},
             </if>
             <if test="createTime != null and createTime != '' ">
-                and create_iime = #{createTime,jdbcType=VARCHAR}
+                create_time = #{createTime,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
-                and status = #{status,jdbcType=INTEGER}
+                status = #{status,jdbcType=INTEGER},
             </if>
         </set>
-        where manager_id = #{managerId,jdbcType=INTEGER} and status = #{status,jdbcType=INTEGER}
+        where manager_id = #{managerId,jdbcType=INTEGER}
     </update>
+
+    <!-- relation: manager & role -->
+    <select id="selectCountByManagerId" parameterType="java.lang.Integer">
+        select count(1) from yj_relation_manager_role
+        where manager_id =  #{managerId,jdbcType=INTEGER}
+    </select>
+    <insert id="insertRelationSelective" parameterType="com.yjjk.reservation.entity.ManagerAndRole">
+        insert into yj_relation_manager_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="relId != null">
+                rel_id,
+            </if>
+            <if test="roleId != null">
+                role_id,
+            </if>
+            <if test="managerId != null">
+                manager_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="relId != null">
+                #{relId,jdbcType=INTEGER},
+            </if>
+            <if test="roleId != null ">
+                #{roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="managerId != null">
+                #{managerId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <delete id="deleteManagerRole" parameterType="com.yjjk.reservation.entity.ManagerAndRole">
+        delete from yj_relation_manager_role
+        <where>
+            <if test="relId != null">
+                rel_id = #{relId,jdbcType=INTEGER}
+            </if>
+            <if test="roleId != null ">
+                and role_id = #{roleId,jdbcType=VARCHAR}
+            </if>
+            <if test="managerId != null">
+                and manager_id = #{managerId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </delete>
 </mapper>
 
