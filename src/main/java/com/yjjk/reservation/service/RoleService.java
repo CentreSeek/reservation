@@ -47,6 +47,7 @@ public interface RoleService {
     /**
      * 更新却色权限信息
      * @param role
+     * @param authorityIds
      * @return
      */
     int updateRole(Role role, List<Integer> authorityIds);
