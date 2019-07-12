@@ -53,7 +53,7 @@ public class ManagerController extends BaseController {
             return;
         }
         Manager manager = list.get(0);
-        if(!PasswordUtils.verify(password, manager.getPassword())){
+        if (!PasswordUtils.verify(password, manager.getPassword())) {
             message = "密码错误";
             returnResult(startTime, request, response, resultCode, message, "");
             return;
@@ -78,7 +78,7 @@ public class ManagerController extends BaseController {
         long startTime = System.currentTimeMillis();
         boolean resultCode = false;
         String message = "";
-        if (manager.getManagerId() == null){
+        if (manager.getManagerId() == null) {
             message = "参数错误";
             returnResult(startTime, request, response, resultCode, message, "");
             return;
@@ -147,7 +147,7 @@ public class ManagerController extends BaseController {
         long startTime = System.currentTimeMillis();
         boolean resultCode = false;
         String message = "";
-        if (StringUtils.isNullorEmpty(manager.getAccount()) || StringUtils.isNullorEmpty(manager.getPassword())){
+        if (StringUtils.isNullorEmpty(manager.getAccount()) || StringUtils.isNullorEmpty(manager.getPassword())) {
             message = "参数错误";
             returnResult(startTime, request, response, resultCode, message, "");
             return;
