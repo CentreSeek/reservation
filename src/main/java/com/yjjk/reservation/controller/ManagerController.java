@@ -78,6 +78,11 @@ public class ManagerController extends BaseController {
         long startTime = System.currentTimeMillis();
         boolean resultCode = false;
         String message = "";
+        if (manager.getManagerId() == null){
+            message = "参数错误";
+            returnResult(startTime, request, response, resultCode, message, "");
+            return;
+        }
         manager.setStatus(0);
 
         Manager tmpManager = new Manager();
