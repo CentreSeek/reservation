@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.print.attribute.standard.MediaName;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -141,6 +142,11 @@ public class ManagerController extends BaseController {
         long startTime = System.currentTimeMillis();
         boolean resultCode = false;
         String message = "";
+        if (StringUtils.isNullorEmpty(manager.getAccount()) || StringUtils.isNullorEmpty(manager.getPassword())){
+            message = "参数错误";
+            returnResult(startTime, request, response, resultCode, message, "");
+            return;
+        }
 
         // 验证account是否已注册
         Manager tempManager = new Manager();

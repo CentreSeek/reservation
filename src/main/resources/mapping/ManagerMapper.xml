@@ -26,16 +26,16 @@
         left join yj_relation_manager_role yrmr on ymi.manager_id = yrmr.manager_id
         <trim prefix="WHERE" prefixOverrides="AND">
             <if test="managerId != null ">
-                and manager_id = #{managerId,jdbcType=INTEGER}
+                and ymi.manager_id = #{managerId,jdbcType=INTEGER}
             </if>
             <if test="userType != null ">
-                and user_type = #{userType,jdbcType=INTEGER}
+                and ymi.user_type = #{userType,jdbcType=INTEGER}
             </if>
             <if test="account != null and account != '' ">
-                and account = #{account,jdbcType=VARCHAR}
+                and ymi.account = #{account,jdbcType=VARCHAR}
             </if>
             <if test="status != null">
-                and status = #{status,jdbcType=INTEGER}
+                and ymi.status = #{status,jdbcType=INTEGER}
             </if>
         </trim>
     </select>
