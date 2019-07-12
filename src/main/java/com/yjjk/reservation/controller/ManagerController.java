@@ -117,7 +117,7 @@ public class ManagerController extends BaseController {
         manager.setManagerId(managerId);
 
         List<Manager> list = super.managerService.getManagerInfoSelective(manager);
-        if (list == null && list.size() == 0) {
+        if (StringUtils.listIsNullOrEmpty(list)) {
             message = "查询失败,未查询到相关用户信息";
             returnResult(startTime, request, response, resultCode, message, "");
             return;
@@ -275,7 +275,7 @@ public class ManagerController extends BaseController {
         String message = "";
 
         List<Role> list = super.roleService.getRoleInfo(role);
-        if (list == null) {
+        if (StringUtils.listIsNullOrEmpty(list)) {
             message = "获取失败";
             returnResult(startTime, request, response, resultCode, message, list);
             return;
@@ -394,7 +394,7 @@ public class ManagerController extends BaseController {
         String message = "";
 
         List<Authority> authorityList = super.authorityService.getAuthorityInfoSelective(authority);
-        if (authorityList == null) {
+        if (StringUtils.listIsNullOrEmpty(authorityList)) {
             message = "查询失败";
             returnResult(startTime, request, response, resultCode, message, authorityList);
             return;
